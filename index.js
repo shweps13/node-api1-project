@@ -48,14 +48,30 @@ server.get('/api/users/:id', (req, res) => {
     console.log("ID of requested user: ", id)
 
     dataBase.findById(id)
-    .then(users => {
+    .then(user => {
 
-        res.send(users);
+        res.send(user);
     }).catch(error => {
         res.send(error)
     });
 
 });
+
+// DELETE user by ID from database
+server.delete('/api/users/:id', (req, res) => {
+
+    const id = req.params.id;
+    console.log("ID of requested user for delete: ", id)
+
+    dataBase.remove(id)
+    .then(user => {
+        res.json(user);
+    }).catch(error => {
+        res.json(error)
+    });
+
+});
+
 
 const port = 8000;
 server.listen(port, () => console.log(`\n** API on port ${port} is working **\n`))
