@@ -41,8 +41,9 @@ server.get('/api/users', (req, res) => {
     dataBase.find()
     .then(users => {
         res.send(users);
-    }).catch(error => {
-        res.send(error)
+    })
+    .catch(error => {
+        res.status(500).send({ error: "The users information could not be retrieved." })
     });
 
 });
@@ -53,14 +54,19 @@ server.get('/api/users/:id', (req, res) => {
     const id = req.params.id;
     console.log("ID of requested user: ", id)
 
+
     dataBase.findById(id)
+    // console.log(dataBase.findById(id))
     .then(user => {
-
-        res.send(user);
-    }).catch(error => {
-        res.send(error)
+        if(user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: "The user with the specified ID does not exist." })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ error: "The user information could not be retrieved." })
     });
-
 });
 
 // DELETE user by ID from database
@@ -72,8 +78,9 @@ server.delete('/api/users/:id', (req, res) => {
     dataBase.remove(id)
     .then(user => {
         res.json(user);
-    }).catch(error => {
-        res.json(error)
+    })
+    .catch(error => {
+        res.status(500).json({ error: "The user could not be removed" })
     });
 
 });
@@ -88,7 +95,7 @@ server.put('/api/users/:id', (req, res) => {
         res.json(user);
     })
     .catch(error => {
-        res.json({message: `error put the user ${error}`})
+        res.status(500).json({ error: "The user information could not be modified." })
     });
 })
 
