@@ -30,8 +30,8 @@ function MainBlock() {
                                 <Card.Header>User {user.id}</Card.Header>
                                 <Card.Meta>{user.name}</Card.Meta>
                                 <Card.Description>{user.bio}</Card.Description>
-                                <CardBtn id={user.id} setState={setState} />
                             </Card.Content>
+                            <CardBtn id={user.id} setState={setState} />
                         </Card>
                     ))}
         </Card.Group>
