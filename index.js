@@ -16,15 +16,21 @@ server.get('/', (req, res) => {
 // POST user info to database
 server.post('/api/users', (req, res) => {
     const dbData = req.body;
-    console.log('hubData', dbData)
+    console.log('dataBase', dbData)
 
-    dataBase.insert(dbData)
-        .then(user => {
-            res.json(user); 
-        })
-        .catch(error => {
-            res.json({message: `error saving the user ${error}`})
-        });  
+        if (!dbData.name || !dbData.bio) {
+            res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
+        } else {
+            
+            dataBase.insert(dbData)
+            .then(user => {
+                res.status(201).json(user); 
+            })
+            .catch(error => {
+                res.status(500).json({ error: "There was an error while saving the user to the database" })
+            }); 
+        }
+
 })
 //  Can send json like { "name": "some name", "bio": "some bio" }
 
