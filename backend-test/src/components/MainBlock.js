@@ -3,12 +3,14 @@ import { Card } from 'semantic-ui-react'
 
 import AxiosThing from '../util/AxiosThing';
 import CardBtn from './CardBtn';
+import AddUser from './AddUser';
 
 
 function MainBlock() {
 
     const [users, setUsers] = useState([]);
     const [state, setState] = useState('');
+    const [update, setUpdate] = useState(false);
     console.log(users);
 
     useEffect(() => {
@@ -18,11 +20,11 @@ function MainBlock() {
             setUsers(res.data);
         })
         .catch(err => console.log(err));
-      }, [state]);
+      }, [state, update]);
 
   return (
     <div className="MainBlock">
-        <p>Something important</p>
+        <AddUser update={update} setUpdate={setUpdate} />
         <Card.Group centered>
             {users.map(user => (
                         <Card key={user.id}>
