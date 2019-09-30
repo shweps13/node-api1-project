@@ -72,6 +72,19 @@ server.delete('/api/users/:id', (req, res) => {
 
 });
 
+// PUT user by ID from database
+server.put('/api/users/:id', (req, res) => {
+    const id = req.params.id;
+    const changes = req.body;
+
+    dataBase.update(id, changes)
+    .then(user => {
+        res.json(user);
+    })
+    .catch(error => {
+        res.json({message: `error put the user ${error}`})
+    });
+})
 
 const port = 8000;
 server.listen(port, () => console.log(`\n** API on port ${port} is working **\n`))
