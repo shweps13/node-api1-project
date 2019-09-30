@@ -13,6 +13,22 @@ server.get('/', (req, res) => {
     res.send('hello world');
 })
 
+// POST user info to database
+server.post('/api/users', (req, res) => {
+    const dbData = req.body;
+    console.log('hubData', dbData)
+
+    dataBase.insert(dbData)
+        .then(user => {
+            res.json(user); 
+        })
+        .catch(error => {
+            res.json({message: `error saving the user ${error}`})
+        });  
+})
+//  Can send json like { "name": "some name", "bio": "some bio" }
+
+
 // GET ALL users from database
 server.get('/api/users', (req, res) => {
 
